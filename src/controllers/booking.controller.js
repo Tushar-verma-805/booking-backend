@@ -7,6 +7,8 @@ exports.createBooking = async (req, res) => {
     const userId = req.user.id;
     const { carpenterId, time, date } = req.body;
 
+    console.log({ carpenterId, time, date }, "345678")
+
     if (!carpenterId) return res.status(400).json({ message: 'carpenterId is required' });
 
     const formattedTime = moment(time, 'hh:mm A').format('HH:mm:ss');
