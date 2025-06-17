@@ -13,7 +13,7 @@ Installs all dependencies needed for the server to run.
 ### `npm start`
 
 Starts the server in development mode.\
-Server will run on [http://localhost:5000](http://localhost:5000).
+Server will run on [http://localhost:8000](http://localhost:8000).
 
 Make sure your database is running and configured in `.env`.
 
