@@ -1,43 +1,16 @@
 const db = require("../models");
 
-// exports.createBooking = async (userId, slotId) => {
-//     const slot = await db.Slot.findOne({ where: { id: slotId } });
-//     if (!slot) throw new Error("Slot not found");
-//     if (slot.isBooked) throw new Error("Slot already booked");
+exports.deleteBooking = async (userId, bookingId) => {
+    const booking = await db.Booking.findOne({ where: { id: bookingId, userId } });
+    if (!booking) throw new Error("Booking not found");
 
-//     // Update slot as booked
-//     await slot.update({ isBooked: true });
+    // Mark slot as available again
+    await db.Slot.update({ isBooked: false }, { where: { id: booking.slotId } });
 
-//     const booking = await db.Booking.create({
-//         id: Date.now().toString(),
-//         userId,
-//         slotId,
-//         status: "confirmed"
-//     });
+    await booking.update({ status: 'cancelled' });
 
-//     return { message: "Slot booked successfully", booking };
-// };
-
-// exports.getMyBookings = async (userId) => {
-//     const bookings = await db.Booking.findAll({
-//         where: { userId },
-//         include: [{ model: db.Slot, include: [db.Carpenter] }]
-//     });
-
-//     return bookings;
-// };
-
-// exports.deleteBooking = async (userId, bookingId) => {
-//     const booking = await db.Booking.findOne({ where: { id: bookingId, userId } });
-//     if (!booking) throw new Error("Booking not found");
-
-//     // Mark slot as available again
-//     await db.Slot.update({ isBooked: false }, { where: { id: booking.slotId } });
-
-//     await booking.destroy();
-
-//     return { message: "Booking cancelled" };
-// };
+    return { message: "Booking cancelled" };
+};
 
 
 exports.createBooking = async ({ userId, carpenterId, time, date }) => {

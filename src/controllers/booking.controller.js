@@ -41,17 +41,14 @@ exports.getBookedSlotsByCarpenter = async (req, res) => {
   }
 };
 
+exports.deleteBooking = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
 
-
-
-// exports.deleteBooking = async (req, res) => {
-//   try {
-//     const userId = req.user.id;
-//     const { id } = req.params;
-
-//     const result = await BookingService.deleteBooking(userId, id);
-//     res.json(result);
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// };
+    const result = await BookingService.deleteBooking(userId, id);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
