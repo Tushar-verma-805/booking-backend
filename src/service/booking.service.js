@@ -50,14 +50,23 @@ exports.createBooking = async ({ userId, carpenterId, time, date }) => {
 
 
 
-exports.getBookedSlotsByCarpenter = async (carpenterId) => {
+exports.getBookedSlotsByCarpenter = async (carpenterId, date) => {
+    const whereClause = {
+        carpenterId,
+        isBooked: true,
+    };
+
+    if (date) {
+        whereClause.date = date; // Filter only if date is provided
+    }
+
+    console.log(whereClause)
+
     return db.Slot.findAll({
-        where: {
-            carpenterId,
-            isBooked: true,
-        },
+        where: whereClause,
     });
 };
+
 
 
 exports.getUserBookings = async (userId) => {

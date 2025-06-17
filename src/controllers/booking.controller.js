@@ -34,7 +34,9 @@ exports.getUserBookings = async (req, res) => {
 exports.getBookedSlotsByCarpenter = async (req, res) => {
   try {
     const { carpenterId } = req.params;
-    const slots = await BookingService.getBookedSlotsByCarpenter(carpenterId);
+    const { date } = req.query;
+
+    const slots = await BookingService.getBookedSlotsByCarpenter(carpenterId, date);
     res.json(slots);
   } catch (err) {
     res.status(500).json({ message: err.message });
